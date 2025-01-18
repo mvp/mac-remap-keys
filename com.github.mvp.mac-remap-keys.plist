@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.github.mvp.mac-remap-keys</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/hidutil</string>
+    <string>property</string>
+    <string>--matching</string>
+    <!--
+      This filter matches only Mac internal keyboard.
+      To remap external keyboard, inspect with `hidutil list`
+      and match it by VendorID and/or ProductID instead:
+      "VendorID":  0x046d,
+      "ProductID": 0xb366,
+    -->
+    <string>{
+      "Built-In": 1,
+      "Transport": "FIFO"
+    }</string>
+    <string>--set</string>
+    <!-- Swap "§" and "`" keys.
+       For all possible codes check https://developer.apple.com/library/archive/technotes/tn2450
+    -->
+    <string>{
+      "UserKeyMapping": [
+        {
+          "HIDKeyboardModifierMappingSrc": 0x700000035,
+          "HIDKeyboardModifierMappingDst": 0x700000064
+        },
+        {
+          "HIDKeyboardModifierMappingSrc": 0x700000064,
+          "HIDKeyboardModifierMappingDst": 0x700000035
+        }
+      ]
+    }</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>
